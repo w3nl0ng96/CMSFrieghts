@@ -61,9 +61,9 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" id="btnCheckShippingStatus" href="~/ShippingStatus" visible="false">Shipping Status</a></li>
                         <li><a runat="server" id="btnAddNewShipping" href="~/AddNewShipping" visible="false">Add New Shipping</a></li>
-                        <li><a runat="server" id="btnApproveShipping" href="~/Contact" visible="false">Approve Shipping</a></li>
-                        <li><a runat="server" id="btnReceivedShipping" href="~/Contact" visible="false">Receive Shipping</a></li>
-                        <li><a runat="server" id="btnHistory" href="~/Contact" visible="false">History Log</a></li>
+                        <li><a runat="server" id="btnApproveShipping" href="~/ApproveRequest" visible="false">Approve Shipping</a></li>
+                        <li><a runat="server" id="btnReceivedShipping" href="~/ReceiveShipping" visible="false">Receive Shipping</a></li>
+                        <li><a runat="server" id="btnHistory" href="~/HistoryLog" visible="false">History Log</a></li>
                         
                     </ul>
                    
