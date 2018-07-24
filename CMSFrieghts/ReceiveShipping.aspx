@@ -17,5 +17,5 @@
         </Columns>
 </asp:GridView>
         </div>
-<asp:SqlDataSource ID="CMSFreights" runat="server" ConnectionString="<%$ ConnectionStrings:CMSFrieghts2018DDAC_dbConnectionString %>" SelectCommand="SELECT * FROM [CustomerShipping]"></asp:SqlDataSource>
+<asp:SqlDataSource ID="CMSFreights" runat="server" ConnectionString="<%$ ConnectionStrings:CMSFrieghts2018DDAC_dbConnectionString %>" SelectCommand="SELECT * FROM [CustomerShipping] where status = 'Pending Receive'"></asp:SqlDataSource>
 </asp:Content>

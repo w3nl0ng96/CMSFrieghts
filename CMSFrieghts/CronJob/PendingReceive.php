@@ -12,7 +12,7 @@
 
     try
 	{
-		$sql = "UPDATE CustomerShipping SET status = 'Delivering' WHERE status = 'Approved';";
+		$sql = "UPDATE CustomerShipping SET status = 'Pending Receive' WHERE status = 'Delivering';";
 		$query = $connection->prepare($sql);
 		$query->execute();
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
