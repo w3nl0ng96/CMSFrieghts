@@ -10,7 +10,7 @@
 namespace CMSFrieghts.Account {
     
     
-    public partial class Register {
+    public partial class ChangePassword {
         
         /// <summary>
         /// ErrorMessage control.
@@ -19,16 +19,16 @@ namespace CMSFrieghts.Account {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ErrorMessage;
+        protected global::System.Web.UI.WebControls.PlaceHolder ErrorMessage;
         
         /// <summary>
-        /// Email control.
+        /// FailureText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Email;
+        protected global::System.Web.UI.WebControls.Literal FailureText;
         
         /// <summary>
         /// Password control.
@@ -49,39 +49,12 @@ namespace CMSFrieghts.Account {
         protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
         
         /// <summary>
-        /// CompanyName control.
+        /// RegisterHyperLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CompanyName;
-        
-        /// <summary>
-        /// PersonInCharge control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PersonInCharge;
-        
-        /// <summary>
-        /// ContactNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ContactNo;
-        
-        /// <summary>
-        /// regexPhone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexPhone;
+        protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink;
     }
 }

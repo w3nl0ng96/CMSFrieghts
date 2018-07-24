@@ -6,6 +6,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using CMSFrieghts.Models;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
+using System.Web.Configuration;
 
 namespace CMSFrieghts.Account
 {
@@ -13,24 +17,37 @@ namespace CMSFrieghts.Account
     {
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
-            var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
-            IdentityResult result = manager.Create(user, Password.Text);
-            if (result.Succeeded)
-            {
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                //string code = manager.GenerateEmailConfirmationToken(user.Id);
-                //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
-                //manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+            SqlConnection newcon = new SqlConnection();
+            newcon.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-                signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
-                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-            }
-            else 
+            string registerNewCustomer = "INSERT INTO UsersAccount (email_address,password,credentials,company_name,person_incharge,contact_number) VALUES (@emailaddress,@password,@credentials,@companyname,@personname,@contactno)";
+            SqlCommand registerNewCustomerCMD = new SqlCommand(registerNewCustomer, newcon);
+            registerNewCustomerCMD.Parameters.Add("@emailaddress", SqlDbType.NVarChar);
+            registerNewCustomerCMD.Parameters["@emailaddress"].Value = Email.Text;
+            registerNewCustomerCMD.Parameters.Add("@password", SqlDbType.NVarChar);
+            registerNewCustomerCMD.Parameters["@password"].Value = Password.Text;
+            registerNewCustomerCMD.Parameters.Add("@credentials", SqlDbType.NVarChar);
+            registerNewCustomerCMD.Parameters["@credentials"].Value = WebConfigurationManager.AppSettings["CustomerCredentials"];
+            registerNewCustomerCMD.Parameters.Add("@companyname", SqlDbType.NVarChar);
+            registerNewCustomerCMD.Parameters["@companyname"].Value = CompanyName.Text;
+            registerNewCustomerCMD.Parameters.Add("@personname", SqlDbType.NVarChar);
+            registerNewCustomerCMD.Parameters["@personname"].Value = PersonInCharge.Text;
+            registerNewCustomerCMD.Parameters.Add("@contactno", SqlDbType.NVarChar);
+            registerNewCustomerCMD.Parameters["@contactno"].Value = ContactNo.Text;
+
+            newcon.Open();
+            int successfullyRegister = registerNewCustomerCMD.ExecuteNonQuery();
+            newcon.Close();
+
+            if (successfullyRegister == 0)
             {
-                ErrorMessage.Text = result.Errors.FirstOrDefault();
+
             }
+            else
+            {
+                Response.Redirect("~/Account/Login", false);
+            }
+
         }
     }
 }

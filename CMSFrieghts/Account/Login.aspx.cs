@@ -5,6 +5,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using CMSFrieghts.Models;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Web.Security;
+
 
 namespace CMSFrieghts.Account
 {
@@ -12,48 +16,76 @@ namespace CMSFrieghts.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterHyperLink.NavigateUrl = "Register";
-            // Enable this once you have account confirmation enabled for password reset functionality
-            //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
-            {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
-            }
+
+            Session["ID"] = "";
+            Session["EmailAddress"] = "";
+            Session["Credentials"] = "";
+            Session["LoggedIn"] = false;
+
         }
 
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            SqlConnection newcon = new SqlConnection();
+            try
             {
-                // Validate the user password
-                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+                newcon.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                newcon.Open();
 
-                // This doen't count login failures towards account lockout
-                // To enable password failures to trigger lockout, change to shouldLockout: true
-                var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
+                SqlCommand login = new SqlCommand("SELECT id, email_address, password, credentials from UsersAccount where email_address = @emailAddress and password = @password", newcon);
+                login.Parameters.Add(new SqlParameter("@emailAddress", Email.Text));
+                login.Parameters.Add(new SqlParameter("@password", Password.Text));
+                SqlDataReader dataReader = login.ExecuteReader();
 
-                switch (result)
+                if (dataReader.Read())
                 {
-                    case SignInStatus.Success:
-                        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-                        break;
-                    case SignInStatus.LockedOut:
-                        Response.Redirect("/Account/Lockout");
-                        break;
-                    case SignInStatus.RequiresVerification:
-                        Response.Redirect(String.Format("/Account/TwoFactorAuthenticationSignIn?ReturnUrl={0}&RememberMe={1}", 
-                                                        Request.QueryString["ReturnUrl"],
-                                                        RememberMe.Checked),
-                                          true);
-                        break;
-                    case SignInStatus.Failure:
-                    default:
-                        FailureText.Text = "Invalid login attempt";
-                        ErrorMessage.Visible = true;
-                        break;
+                    var userID = dataReader["id"].ToString();
+                    var credential = dataReader["credentials"].ToString();
+                    var password = dataReader["password"].ToString();
+                    newcon.Close();
+                    dataReader.Close();
+
+                    Session["ID"] = userID;
+                    Session["EmailAddress"] = Email.Text;
+                    Session["Credentials"] = credential;
+                    Session["LoggedIn"] = true;
+
+                    if (credential.Equals("Customer"))
+                    {
+                        Response.Redirect("/ShippingStatus", false);
+                    }
+                    if (credential.Equals("Staff"))
+                    {
+                        Response.Redirect("/ApproveRequest", false);
+                    }
+
+                }
+                else
+                {
+                    Type type = this.GetType();
+                    ClientScriptManager csm = Page.ClientScript;
+                    if (!csm.IsStartupScriptRegistered(type, "PopupScript"))
+                    {
+                        String errormessage = "alert('Incorrect email address or password! Please enter again');";
+                        csm.RegisterStartupScript(type, "PopupScript", errormessage, true);
+                    }
+                }
+
+                if (!dataReader.IsClosed)
+                {
+                    dataReader.Close();
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                if (newcon.State == System.Data.ConnectionState.Open)
+                {
+                    newcon.Close();
+                    newcon.Dispose();
                 }
             }
         }

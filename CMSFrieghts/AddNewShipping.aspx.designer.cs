@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CMSFrieghts.Account {
+namespace CMSFrieghts {
     
     
-    public partial class Register {
+    public partial class AddNewShipping {
         
         /// <summary>
         /// ErrorMessage control.
@@ -22,66 +22,84 @@ namespace CMSFrieghts.Account {
         protected global::System.Web.UI.WebControls.Literal ErrorMessage;
         
         /// <summary>
-        /// Email control.
+        /// DeparturePort control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Email;
+        protected global::System.Web.UI.WebControls.DropDownList DeparturePort;
         
         /// <summary>
-        /// Password control.
+        /// PortsDS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Password;
+        protected global::System.Web.UI.WebControls.SqlDataSource PortsDS;
         
         /// <summary>
-        /// ConfirmPassword control.
+        /// ArrivalPort control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
+        protected global::System.Web.UI.WebControls.DropDownList ArrivalPort;
         
         /// <summary>
-        /// CompanyName control.
+        /// ShipType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CompanyName;
+        protected global::System.Web.UI.WebControls.DropDownList ShipType;
         
         /// <summary>
-        /// PersonInCharge control.
+        /// ShipsDS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PersonInCharge;
+        protected global::System.Web.UI.WebControls.SqlDataSource ShipsDS;
         
         /// <summary>
-        /// ContactNo control.
+        /// ContainerType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ContactNo;
+        protected global::System.Web.UI.WebControls.DropDownList ContainerType;
         
         /// <summary>
-        /// regexPhone control.
+        /// ContainerDS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexPhone;
+        protected global::System.Web.UI.WebControls.SqlDataSource ContainerDS;
+        
+        /// <summary>
+        /// estimatedPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox estimatedPrice;
+        
+        /// <summary>
+        /// description control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox description;
     }
 }
